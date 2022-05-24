@@ -42,13 +42,13 @@ public class EmployeeController {
 
 
     @PutMapping
-    public ResponseEntity<String> edit(@RequestBody EmployeeDTO emp) {
-       try{
+    public ResponseEntity<String> edit(@RequestBody EmployeeDTO emp) throws EntityNotFoundException {
+//       try{
            dtoService.update(emp);
            return ResponseEntity.ok().build();
-       } catch (EntityNotFoundException ex) {
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
-       }
+//       } catch (EntityNotFoundException ex) {
+//           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+//       }
     }
 
     @DeleteMapping("/{id}")
