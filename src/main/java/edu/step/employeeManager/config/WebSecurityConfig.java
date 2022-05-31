@@ -20,17 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    // TODO: Implementarea unui filtru care primeste cererea HTTP, extrage tokenul si valideaza
-    // daca utilizatorul exista - OK
-    // TODO: de creat un serviciu, capabil sa incarce informatia despre utilizator
-    // class JwtUserDetailsService implements UserDetailsService {
-    // TODO: de creat o clasa capabila sa proceseze exceptiile
-    // daca nu exista - aruncam exceptie si nu permitem trecerea
-    // TODO: de configurat rolurile utilizatorilor care au dreptul la anumite operatii
-
-
-    // Ce are spring: User, UserDetail, Role
-
     @Autowired
     private CustomUserDetailsService jwtUserDetailsService;
 
@@ -56,8 +45,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate")
-                .permitAll()
+                .authorizeRequests()
+                .antMatchers("/api/authenticate").permitAll()
+                .antMatchers("/api/public/**").permitAll()
                 .anyRequest().authenticated() // all other requests need to be authenticated
                 .and()
                 .sessionManagement()
